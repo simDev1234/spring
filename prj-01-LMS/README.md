@@ -1,11 +1,11 @@
 # LMS (Learning Management System)
 
-##사용 기술
+## 사용 기술
 - spring boot 
 - mariaDB
 
 
-##주요 기능
+## 주요 기능
 1. 회원 
 - 사용자 : 
 	- 회원 가입 및 인증메일
