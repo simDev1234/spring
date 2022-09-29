@@ -1,7 +1,10 @@
 # LMS (Learning Management System)
 
-## 사용 기술
-- spring boot 
+## 환경
+- Spring Boot Devtools
+- Lombok
+- Spring Web
+- Thymeleaf
 - mariaDB
 
 
