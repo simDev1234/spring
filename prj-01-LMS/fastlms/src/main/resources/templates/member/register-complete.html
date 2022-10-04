@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 가입 완료</title>
+    <style>
+
+        /* title */
+        .title{
+            width : 100%;
+            height : 100px;
+            padding : 10px;
+            box-sizing: border-box;
+            text-align : center;
+        }
+
+        /* login-complete-box */
+        .member-info-box{
+            width : 400px;
+            margin : auto;
+            border-radius : 5px;
+            background-color : cornsilk;
+            padding : 20px;
+            box-sizing : border-box;
+        }
+
+        .success {
+            background-color : cornsilk;
+        }
+
+        .fail {
+            background-color : lavenderblush;
+        }
+
+        .msg{
+            display : block;
+            text-align : center;
+            text-decoration: none;
+        }
+
+        a {
+            color : darkblue;
+        }
+    </style>
+</head>
+<body>
+   <h1 class = "title">회원 가입 결과</h1>
+   <div th:replace="/fragments/layout.html::fragment-body-menu"></div>
+   <div th:if="${result}" class = "login-complete-box success">
+       <p class = "msg">회원가입이 정상적으로 완료되었습니다.</p>
+   </div>
+   <div th:if="${result eq false}" class = "login-complete-box fail">
+       <p class = "msg">회원가입에 실패하였습니다.</p>
+   </div>
+</body>
+</html>

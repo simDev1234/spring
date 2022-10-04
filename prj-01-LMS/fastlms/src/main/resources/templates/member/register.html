@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 가입</title>
+    <style>
+
+        /* title */
+        .title{
+            width : 100%;
+            height : 100px;
+            padding : 10px;
+            box-sizing: border-box;
+            text-align : center;
+        }
+
+        /* login form */
+        .login-box{
+            width : 400px;
+            margin : auto;
+            border-radius : 5px;
+            background-color : gainsboro;
+            padding : 20px;
+            box-sizing : border-box;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border-radius : 5px;
+            background-color: black;
+            border : none;
+            color : white;
+            cursor : pointer;
+        }
+    </style>
+    <script>
+
+        /* 비밀번호 규칙 */
+        const reg = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;
+
+        function passwordCheck(){
+            let password = document.getElementById("password");
+            let rePassword = document.getElementById("rePassword");
+
+            if (!reg.test(password.value)) {
+                alert("비밀번호는 8자리 이상으로 영문자, 숫자, 특수문자 포함 문자로 작성해주세요.")
+                password.innerText = '';
+                return false;
+            }
+
+            if (password.value != rePassword.value) {
+                alert("비밀번호가 일치하지 않습니다.")
+                rePassword.innerText = '';
+                return false;
+            }
+
+            return true;
+        }
+
+        function register(f){
+
+            if (passwordCheck() == false) {
+                console.log("등록 실패");
+                return false;
+            } else {
+                f.submit();
+                return true;
+            }
+
+        }
+    </script>
+</head>
+<body>
+   <h1 class = "title">회원 가입</h1>
+   <div th:replace="/fragments/layout.html::fragment-body-menu"></div>
+   <div class = "login-box">
+       <form method = "post">
+           <label for="userName">이름</label>
+           <input type="text" id="userName" name="userName" required>
+           <label for="userId">이메일</label>
+           <input type="email" id="userId" name="userId" placeholder="ex. hongildong@gmail.com" required>
+           <label for="password">비밀번호</label>
+           <input type="password" id="password" name="password" placeholder="8자리 이상의 영문자, 숫자, 특수문자 모두 포함" required>
+           <label for="rePassword">비밀번호 확인</label>
+           <input type="password" id="rePassword" placeholder="비밀번호 재입력" required>
+           <label for="phone">휴대폰번호</label>
+           <input type="tel" id="phone" name="phoneNumber" placeholder="ex. 010-1234-5678"  required>
+           <button onclick = "return register(this.form)">가입하기</button>
+       </form>
+   </div>
+</body>
+</html>

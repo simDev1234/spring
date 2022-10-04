@@ -1,0 +1,9 @@
+POST http://localhost:8080/member/register
+Content-Type: application/json
+
+{
+  "userId"   : "simDev1234@gmail.com",
+  "password"  : "abcdEF123!@#",
+  "userName" : "테스트",
+  "phoneNumber" : "010-7777-8888"
+}
