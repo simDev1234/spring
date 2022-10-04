@@ -2,11 +2,12 @@ package com.example.fastlms.member.service.impl;
 
 import com.example.fastlms.admin.dto.MemberDto;
 import com.example.fastlms.admin.mapper.MemberMapper;
+import com.example.fastlms.admin.model.MemberSearch;
 import com.example.fastlms.components.MailComponents;
 import com.example.fastlms.member.entity.Member;
 import com.example.fastlms.member.exception.MemberNotEmailAuthException;
-import com.example.fastlms.member.model.MemberRegister;
 import com.example.fastlms.member.model.MemberFindPassword;
+import com.example.fastlms.member.model.MemberRegister;
 import com.example.fastlms.member.repository.MemberRepository;
 import com.example.fastlms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -231,14 +233,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<MemberDto> list() {
+    public List<MemberDto> list(MemberSearch.Request request) {
 
-        MemberDto parameter = new MemberDto();
-
-        List<MemberDto> list = memberMapper.selectList(parameter);
+        List<MemberDto> list = memberMapper.selectList(request);
 
         return list;
-
-        /*return memberRepository.findAll();*/
     }
 }

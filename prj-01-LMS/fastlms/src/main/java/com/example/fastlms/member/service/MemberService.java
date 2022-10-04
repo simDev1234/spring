@@ -1,9 +1,9 @@
 package com.example.fastlms.member.service;
 
 import com.example.fastlms.admin.dto.MemberDto;
-import com.example.fastlms.member.entity.Member;
-import com.example.fastlms.member.model.MemberRegister;
+import com.example.fastlms.admin.model.MemberSearch;
 import com.example.fastlms.member.model.MemberFindPassword;
+import com.example.fastlms.member.model.MemberRegister;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -38,5 +38,5 @@ public interface MemberService extends UserDetailsService {
     /**
      * 회원 목록 리턴(관리자에서만 사용 가능)
      */
-    List<MemberDto> list();
+    List<MemberDto> list(MemberSearch.Request request);
 }
