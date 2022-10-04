@@ -43,7 +43,4 @@ public class Member {
     @CreatedDate
     private LocalDateTime registeredAt;
 
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-
 }

@@ -1,5 +1,7 @@
 package com.example.fastlms.member.service.impl;
 
+import com.example.fastlms.admin.dto.MemberDto;
+import com.example.fastlms.admin.mapper.MemberMapper;
 import com.example.fastlms.components.MailComponents;
 import com.example.fastlms.member.entity.Member;
 import com.example.fastlms.member.exception.MemberNotEmailAuthException;
@@ -28,6 +30,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     private final MailComponents mailComponents;
+    private final MemberMapper memberMapper;
 
     /**
      * 가입하기
@@ -225,5 +228,17 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return true;
+    }
+
+    @Override
+    public List<MemberDto> list() {
+
+        MemberDto parameter = new MemberDto();
+
+        List<MemberDto> list = memberMapper.selectList(parameter);
+
+        return list;
+
+        /*return memberRepository.findAll();*/
     }
 }
