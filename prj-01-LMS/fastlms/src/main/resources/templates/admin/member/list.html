@@ -20,27 +20,32 @@
             border: 1px solid black;
         }
         .search-form {
+            position: relative;
             padding : 5px 0 10px 0;
             text-align: right;
+        }
+        .search-form .total-count{
+            position:absolute;
+            left:0; top:0;
+            height:20px;
+        }
+        .pager{
+            margin-top:20px;
+            text-align:center;
+        }
+
+        .pager a.on{
+            font-weight : bold;
+            color:red;
         }
     </style>
 </head>
 <body>
     <h1>관리자 회원관리</h1>
-    <div>
-        <a href="/admin/main.do">관리자 메인</a>
-        |
-        <a href="/admin/member/list.do">회원 관리</a>
-        |
-        <a href="#">카테고리 관리</a>
-        |
-        <a href="#">강의 관리</a>
-        |
-        <a href="/member/logout">로그아웃</a>
-        <br/>
-    </div>
+    <div th:replace="/fragments/layout.html::fragment-admin-body-menu"></div>
     <div class = "list">
         <div class = "search-form">
+            <p class = "total-count">전체 <span th:text="${totalCount}"></span>개</p>
             <form method = "get">
                 <select name = "searchType">
                     <option th:selected="${#strings.equals(param.searchType,'all')}" value = "all">전체</option>
@@ -65,9 +70,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="x, i : ${list}">
-                    <td th:text="${i.count}">1</td>
-                    <td th:text="${x.userId}"></td>
+                <tr th:each="x : ${list}">
+                    <td th:text="${x.seq}">1</td>
+                    <td>
+                        <a th:text="${x.userId}" th:href="${'detail.do?userId=' + x.userId}"></a>
+                    </td>
                     <td th:text="${x.userName}"></td>
                     <td th:text="${x.phoneNumber}"></td>
                     <td>
@@ -82,6 +89,7 @@
                 </tr>
             </tbody>
         </table>
+        <div class ="pager" th:utext="${pager}"></div>
     </div>
 </body>
 </html>

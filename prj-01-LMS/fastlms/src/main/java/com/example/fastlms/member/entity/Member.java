@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Member {
+public class Member implements MemberCode{
     @Id
     private String userId;
     private String password;
@@ -40,7 +40,13 @@ public class Member {
     // ㄴ ex. ROLE_SEMI_USER, ROLE_USER, ROLE_SPECIAL_USER, ROLE_ADMIN
     private boolean adminYn;
 
+    // 회원 상태 : 이용가능상태, 정지상태
+    private String userStatus; 
+
     @CreatedDate
     private LocalDateTime registeredAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
 }

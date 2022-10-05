@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>회원 상세 정보</title>
+    <style>
+
+        .detail table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border : 1px solid black;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>회원 상세 정보</h1>
+    <div th:replace="/fragments/layout.html::fragment-admin-body-menu"></div>
+    <div class = "detail">
+        <table>
+            <tbody>
+                <tr>
+                    <th>아이디</th>
+                    <td th:text="${member.userId}"></td>
+                </tr>
+                <tr>
+                    <th>이름</th>
+                    <td th:text="${member.userName}"></td>
+                </tr>
+                <tr>
+                    <th>연락처</th>
+                    <td th:text="${member.phoneNumber}"></td>
+                </tr>
+                <tr>
+                    <th>가입일</th>
+                    <td th:text="${member.registeredAt}"></td>
+                </tr>
+                <tr>
+                    <th>이메일 인증</th>
+                    <td th:text="${member.emailAuthYn}"></td>
+                </tr>
+                <tr>
+                    <th>관리자 여부</th>
+                    <td th:text="${member.adminYn}"></td>
+                </tr>
+                <tr>
+                    <th>회원 상태</th>
+                    <td>
+                        <p>
+                            현재 상태 <span th:text="${member.userStatus}"></span>
+                        </p>
+                        <div>
+                            <form method = "post" action = "/admin/member/status.do">
+                                <input th:value="${member.userId}" type = "hidden" name = "userId">
+                                <select name = "userStatus">
+                                    <option value = "REQ">가입승인중</option>
+                                    <option value = "ING">정상이용중</option>
+                                    <option value = "STOP">정지중</option>
+                                </select>
+                                <button type = "submit">상태 변경</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>비밀번호 초기화</th>
+                    <td>
+                        <div>
+                            <form method = "post" action = "/admin/member/password.do">
+                                <input th:value="${member.userId}" type = "hidden" name = "userId">
+                                <input type = "password" name = "password">
+                                <button type="submit">비밀번호 초기화</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <a href = "list.do">목록으로</a>
+        </div>
+    </div>
+</body>
+</html>
