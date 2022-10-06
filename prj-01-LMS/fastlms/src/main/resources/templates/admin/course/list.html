@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>카테고리</title>
+    <style>
+
+        .list {
+            margin : auto;
+            position :relative;
+        }
+
+        .list table {
+            width : 100%;
+            border-collapse: collapse;
+            text-align:center;
+        }
+
+        .list table th, .list table td {
+            border: 1px solid black;
+        }
+
+        .list .buttons {
+            padding:10px 0;
+            position:relative;
+        }
+
+        .list .buttons a, .list .buttons button {
+            border-width:0;
+            background-color: transparent;
+            text-decoration: underline;
+            font-size:14px;
+            line-height:20px;
+            height:20px;
+            color:#000;
+            cursor:pointer;
+        }
+
+        .list .buttons .total-count {
+            position:absolute;
+            top:0; right:0;
+        }
+
+        .pager{
+            margin-top:20px;
+            text-align:center;
+        }
+
+        .pager a.on{
+            font-weight : bold;
+            color:red;
+        }
+
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+    <script>
+
+        $(document).ready(function(){
+
+            // checkbox 전체 선택
+            $('#selectAll').on('click', function(){
+
+                let checked = $(this).is(":checked");
+
+                $('#dataList input[type=checkbox]').each(function(k, v){
+                    $(this).prop('checked', checked);
+                });
+
+            });
+
+            // checkbox 한 개 선택
+            $('#deleteBtn').on('click', function(){
+                let $checked = $('#dataList input[type = checkbox]:checked');
+
+                if ($checked.length < 1) {
+                    alert('삭제할 데이터를 선택해주세요');
+                    return false;
+                }
+
+                if (!confirm('선택한 데이터를 삭제하시겠습니까?')) {
+                    return false;
+                }
+
+                let idList = [];
+
+                $.each($checked, function(k, v){
+
+                    idList.push($(this).val());
+
+                });
+
+                // 문자열로 전달
+                let $deleteForm = $('form[name=deleteForm]');
+                $deleteForm.find('input[name=idList]').val(idList.join(','));
+                $deleteForm.submit();
+
+            })
+        });
+    </script>
+</head>
+<body>
+    <h1>강좌 관리</h1>
+    <!--<div th:replace="/fragments/layout.html::fragment-admin-body-menu"></div>-->
+    <div class = "list">
+        <div class = "buttons">
+            <p class = "total-count">전체 <span th:text="${totalCount}"></span>개</p>
+            <a href = "add.do">강좌 등록</a>
+            <button id = "deleteBtn" type = "button">선택삭제</button>
+        </div>
+        <div class = "search-form">
+
+            <form method = "get">
+
+            </form>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>
+                    <input type = "checkbox" id = "selectAll">
+                </th>
+                <th>NO</th>
+                <th>강좌명</th>
+                <th>등록일</th>
+            </tr>
+            </thead>
+            <tbody id = "dataList">
+            <tr th:each="x : ${list}">
+                <td>
+                    <input th:value="${x.id}" type = "checkbox">
+                </td>
+                <td th:text="${x.seq}">1</td>
+                <td>
+                    <p>
+                        <a th:href="'edit.do?id=' + ${x.id}"
+                        th:text = "${x.subject}">강좌명</a>
+                    </p>
+                </td>
+                <td th:text="${x.registeredAt}">2021.08.20</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class = "pager" th:utext="${pager}"></div>
+    </div>
+</body>
+
+<form name = "deleteForm" method = "post" action = "/admin/course/delete.do">
+    <input type = "hidden" name ="idList">
+</form>
+
+</html>
