@@ -4,18 +4,18 @@ import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
-public class MemberRegister {
+public class MemberInput {
 
     @Data
     @Builder
     public static class Request {
-        @NotNull
         private String userId;
-        @NotNull
         private String password;
-        @NotNull
         private String userName;
-        @NotNull
         private String phoneNumber;
+        private String newPassword;
+        private String zipcode;
+        private String addr;
+        private String addrDetail;
     }
 }

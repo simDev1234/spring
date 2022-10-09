@@ -41,7 +41,13 @@ public class Member implements MemberCode{
     private boolean adminYn;
 
     // 회원 상태 : 이용가능상태, 정지상태
-    private String userStatus; 
+    private String userStatus;
+
+    // 우편 번호
+    private String zipcode;
+    private String addr;
+    private String addrDetail;
+
 
     @CreatedDate
     private LocalDateTime registeredAt;

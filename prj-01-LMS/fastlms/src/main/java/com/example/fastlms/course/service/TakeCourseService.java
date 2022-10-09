@@ -14,4 +14,12 @@ public interface TakeCourseService {
     /* 수강내용 상태 변경 */
     ServiceResult updateStatus(long id, String status);
 
+    /* 나의 수강 내역 */
+    List<TakeCourseDto> myCourse(String userId);
+
+    /* 특정 수강 신청 내역 조회 */
+    TakeCourseDto detail(long takeCourseId);
+
+    /* 수강 신청 취소 처리 */
+    ServiceResult cancelCourse(long takeCourseId);
 }

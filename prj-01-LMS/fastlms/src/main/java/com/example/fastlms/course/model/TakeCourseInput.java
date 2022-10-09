@@ -9,5 +9,6 @@ public class TakeCourseInput {
 
     private long courseId;
     private String userId;
+    private long takeCourseId;
 
 }

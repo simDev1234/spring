@@ -1,5 +1,6 @@
 package com.example.fastlms.course.dto;
 
+import com.example.fastlms.course.entity.TakeCourse;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -30,6 +31,17 @@ public class TakeCourseDto {
     String userName;
     String phone;
     String subject;
+
+    public static TakeCourseDto of(TakeCourse takeCourse) {
+        return TakeCourseDto.builder()
+                .id(takeCourse.getId())
+                .courseId(takeCourse.getCourseId())
+                .userId(takeCourse.getUserId())
+                .payPrice(takeCourse.getPayPrice())
+                .status(takeCourse.getStatus())
+                .registeredAt(takeCourse.getRegisteredAt())
+                .build();
+    }
 
     public String getRegisteredAtText(){
 

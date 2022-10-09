@@ -1,6 +1,6 @@
 package com.example.fastlms.member.controller;
 
-import com.example.fastlms.member.model.MemberRegister;
+import com.example.fastlms.member.model.MemberInput;
 import com.example.fastlms.member.service.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ class MemberControllerTest {
         mockMvc.perform(post("/member/register")
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                     .content(objectMapper.writeValueAsString(
-                            MemberRegister.Request.builder()
+                            MemberInput.Request.builder()
                                 .userId("simDev1234@gmail.com")
                                 .password("a1234%")
                                 .userName("testtest")

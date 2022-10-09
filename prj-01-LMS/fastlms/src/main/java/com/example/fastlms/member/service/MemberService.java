@@ -2,8 +2,9 @@ package com.example.fastlms.member.service;
 
 import com.example.fastlms.admin.dto.MemberDto;
 import com.example.fastlms.admin.model.MemberParam;
+import com.example.fastlms.course.model.ServiceResult;
 import com.example.fastlms.member.model.MemberFindPassword;
-import com.example.fastlms.member.model.MemberRegister;
+import com.example.fastlms.member.model.MemberInput;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface MemberService extends UserDetailsService {
     /**
      * 계정 생성
      */
-    boolean register(MemberRegister.Request request);
+    boolean register(MemberInput.Request request);
 
     /**
      * uuid에 해당하는 계정 활성화
@@ -54,4 +55,15 @@ public interface MemberService extends UserDetailsService {
      * 회원 비밀번호 초기화
      */
     boolean updatePassword(String userId, String password);
+
+    /**
+     * 회원 정보 페이지 내 비밀번호 변경 가능
+     */
+    ServiceResult updateMemberPassword(MemberInput.Request parameter);
+
+    /**
+     * 회원 정보 수정
+     */
+    ServiceResult updateMember(MemberInput.Request parameter);
+
 }

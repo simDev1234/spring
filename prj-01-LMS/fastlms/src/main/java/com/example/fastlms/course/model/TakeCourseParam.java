@@ -9,6 +9,7 @@ import lombok.Setter;
 public class TakeCourseParam extends CommonParam {
 
     private long id;
+    private String userId;
     private String status;
 
 }

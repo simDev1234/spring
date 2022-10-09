@@ -2,6 +2,7 @@ package com.example.fastlms.course.service;
 
 import com.example.fastlms.course.dto.TakeCourseDto;
 import com.example.fastlms.course.entity.TakeCourse;
+import com.example.fastlms.course.entity.TakeCourseCode;
 import com.example.fastlms.course.mapper.TakeCourseMapper;
 import com.example.fastlms.course.model.ServiceResult;
 import com.example.fastlms.course.model.TakeCourseParam;
@@ -22,7 +23,7 @@ public class TakeCourseServiceImpl implements TakeCourseService{
     private final TakeCourseRepository takeCourseRepository;
 
     /**
-     * 목록 조회
+     * 관리자 - 전체 회원의 수강 내역 조회
      */
     @Override
     public List<TakeCourseDto> list(TakeCourseParam parameter) {
@@ -62,5 +63,52 @@ public class TakeCourseServiceImpl implements TakeCourseService{
         return new ServiceResult(true);
     }
 
+    /**
+     * 프론트 - 나의 수강 내역 조회
+     */
+    @Override
+    public List<TakeCourseDto> myCourse(String userId) {
+
+        TakeCourseParam takeCourseParam = new TakeCourseParam();
+        takeCourseParam.setUserId(userId);
+
+        List<TakeCourseDto> list = takeCourseMapper.selectListMyCourse(takeCourseParam);
+
+        return list;
+    }
+
+    /**
+     * 프론트 - 특정 수강 내역 조회
+     */
+    @Override
+    public TakeCourseDto detail(long takeCourseId) {
+
+        Optional<TakeCourse> optionalTakeCourse = takeCourseRepository.findById(takeCourseId);
+
+        if (optionalTakeCourse.isPresent()) {
+            return TakeCourseDto.of(optionalTakeCourse.get());
+        }
+
+        return null;
+    }
+
+    /**
+     * 프론트 - 특정 수강 신청 취소
+     */
+    @Override
+    public ServiceResult cancelCourse(long takeCourseId) {
+
+        Optional<TakeCourse> optionalTakeCourse = takeCourseRepository.findById(takeCourseId);
+
+        if (!optionalTakeCourse.isPresent()) {
+            return new ServiceResult(false, "수강 정보가 존재하지 않습니다.");
+        }
+
+        TakeCourse takeCourse = optionalTakeCourse.get();
+        takeCourse.setStatus(TakeCourseCode.STATUS_CANCEL);
+        takeCourseRepository.save(takeCourse);
+
+        return new ServiceResult();
+    }
 
 }

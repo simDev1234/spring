@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class ServiceResult {
 
     boolean result;
@@ -16,5 +15,9 @@ public class ServiceResult {
 
     public ServiceResult(boolean result) {
         this.result = result;
+    }
+
+    public ServiceResult() {
+        this.result = true;
     }
 }

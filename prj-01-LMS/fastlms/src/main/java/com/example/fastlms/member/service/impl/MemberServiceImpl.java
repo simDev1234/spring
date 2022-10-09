@@ -4,12 +4,13 @@ import com.example.fastlms.admin.dto.MemberDto;
 import com.example.fastlms.admin.mapper.MemberMapper;
 import com.example.fastlms.admin.model.MemberParam;
 import com.example.fastlms.components.MailComponents;
+import com.example.fastlms.course.model.ServiceResult;
 import com.example.fastlms.member.entity.Member;
 import com.example.fastlms.member.entity.MemberCode;
 import com.example.fastlms.member.exception.MemberNotEmailAuthException;
 import com.example.fastlms.member.exception.MemberStopUserException;
 import com.example.fastlms.member.model.MemberFindPassword;
-import com.example.fastlms.member.model.MemberRegister;
+import com.example.fastlms.member.model.MemberInput;
 import com.example.fastlms.member.repository.MemberRepository;
 import com.example.fastlms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
      * - 아이디(이메일) 등록 후 인증 메일 전송
      */
     @Override
-    public boolean register(MemberRegister.Request request) {
+    public boolean register(MemberInput.Request request) {
 
         Optional<Member> optionalMember = memberRepository.findById(request.getUserId());
 
@@ -297,7 +298,7 @@ public class MemberServiceImpl implements MemberService {
         return true;
     }
 
-    /* 회원 비밀번호 초기화 */
+    /* 관리자단 회원 비밀번호 초기화 */
     @Override
     public boolean updatePassword(String userId, String password) {
         Optional<Member> optionalMember = memberRepository.findById(userId);
@@ -315,4 +316,51 @@ public class MemberServiceImpl implements MemberService {
 
         return true;
     }
+
+    /* 회원정보 - 회원 비밀번호 초기화 */
+    @Override
+    public ServiceResult updateMemberPassword(MemberInput.Request parameter) {
+
+        Optional<Member> optionalMember = memberRepository.findById(parameter.getUserId());
+
+        if (!optionalMember.isPresent()) {
+            return new ServiceResult(false, "회원 정보가 잘못되었거나 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        if (!BCrypt.checkpw(parameter.getPassword(), member.getPassword())) {
+            return new ServiceResult(false, "비밀번호가 일치하지 않습니다.");
+        }
+
+        String encPassword = BCrypt.hashpw(parameter.getNewPassword(), BCrypt.gensalt());
+        member.setPassword(encPassword);
+        memberRepository.save(member);
+
+        return new ServiceResult(true);
+    }
+
+    /* 회원 정보 수정 */
+    @Override
+    public ServiceResult updateMember(MemberInput.Request parameter) {
+        Optional<Member> optionalMember = memberRepository.findById(parameter.getUserId());
+
+        if (!optionalMember.isPresent()) {
+            return new ServiceResult(false, "회원 정보가 잘못되었거나 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        member.setPhoneNumber(parameter.getPhoneNumber());
+        member.setZipcode(parameter.getZipcode());
+        member.setAddr(parameter.getAddr());
+        member.setAddrDetail(parameter.getAddrDetail());
+        memberRepository.save(member);
+
+        return new ServiceResult();
+    }
+
+
+
+
 }

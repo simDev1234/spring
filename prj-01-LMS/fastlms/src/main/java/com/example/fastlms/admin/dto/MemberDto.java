@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,6 +32,11 @@ public class MemberDto {
 
     String userStatus;
 
+    // 우편 번호
+    private String zipcode;
+    private String addr;
+    private String addrDetail;
+
     // 추가 칼럼
     long totalCount;
     long seq;
@@ -50,7 +56,26 @@ public class MemberDto {
                 .registeredAt(member.getRegisteredAt())
                 .updatedAt(member.getUpdatedAt())
                 .userStatus(member.getUserStatus())
+                .zipcode(member.getZipcode())
+                .addr(member.getAddr())
+                .addrDetail(member.getAddrDetail())
                 .build();
+    }
+
+    public String getRegisteredAtText(){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+
+        return registeredAt != null? registeredAt.format(formatter) : "";
+
+    }
+
+    public String getUpdatedAtText(){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+
+        return updatedAt != null? updatedAt.format(formatter) : "";
+
     }
 
 }
