@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -49,4 +51,14 @@ public class CourseDto {
                 .updatedAt(course.getUpdatedAt())
                 .build();
     }
+
+    public static List<CourseDto> of (List<Course> courseList) {
+
+        if (courseList == null) {
+            return null;
+        }
+
+        return courseList.stream().map(CourseDto::of).collect(Collectors.toList());
+    }
+
 }

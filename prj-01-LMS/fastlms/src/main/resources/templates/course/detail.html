@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>강좌 상세 페이지</title>
+    <style>
+        span.price {
+            text-decoration: line-through;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#submitForm').on('submit',function(){
+
+                if (!confirm("수강신청을 하시겠습니까?")){
+                    return false;
+                }
+
+                let $thisForm = $(this);
+                let url = '/api/course/req.api';
+                let parameter = {
+                    courseId : $thisForm.find('input[name=id]').val()
+                };
+                // javascript의 promise 패턴
+                // async (비동기 방식)
+                axios.post(url, parameter).then(function(response){
+
+                    response.data = response.data || {}; // Data를 객체로 초기화
+                    response.data.header = response.data.header || {}; // Header도 객체로 초기화
+
+                    if (!response.data.header.result) {
+                        alert(response.data.header.message);
+                        return false;
+                    }
+
+                    // 정상적일 때
+                    alert('강좌가 정상적으로 신청되었습니다.');
+                    location.href = '/';
+
+                }).catch(function(err){
+                    console.log(err);
+                });
+
+                return false;
+
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>강좌 상세 페이지</h1>
+    <div th:replace="/fragments/layout.html::fragment-body-menu"></div>
+
+    <div>
+        <h3>
+            강좌명 : <span th:text="${detail.subject}"></span>
+            <div th:utext="${detail.contents}"></div>
+            <p th:text="${detail.summary}"></p>
+            <div>
+                <p>가격 : <span th:text="${detail.price}"></span></p>
+                <p>할인가격 : <span th:text="${detail.salePrice}"></span></p>
+            </div>
+            <div>
+                <form id = "submitForm" method = "post">
+                    <input type = "hidden" name = "id" th:value = "${detail.id}">
+                    <button type = "submit">수강신청</button>
+                    <a href = "/course">목록으로</a>
+                </form>
+            </div>
+        </h3>
+    </div>
+</body>
+</html>
