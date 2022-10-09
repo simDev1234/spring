@@ -106,18 +106,12 @@
 </head>
 <body>
     <h1>강좌 관리</h1>
-    <!--<div th:replace="/fragments/layout.html::fragment-admin-body-menu"></div>-->
+    <div th:replace="/fragments/layout.html::fragment-admin-body-menu"></div>
     <div class = "list">
         <div class = "buttons">
             <p class = "total-count">전체 <span th:text="${totalCount}"></span>개</p>
             <a href = "add.do">강좌 등록</a>
             <button id = "deleteBtn" type = "button">선택삭제</button>
-        </div>
-        <div class = "search-form">
-
-            <form method = "get">
-
-            </form>
         </div>
         <table>
             <thead>

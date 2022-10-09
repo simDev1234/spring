@@ -114,10 +114,10 @@ public class MemberServiceImpl implements MemberService {
      * - 시큐러티의 GrantedAuthority를 통해 사용자 권한/역할 추가
      */
     @Override
-    public UserDetails loadUserByUsername(String username)
+    public UserDetails loadUserByUsername(String userId)
             throws UsernameNotFoundException {
 
-        Optional<Member> optionalMember = memberRepository.findById(username);
+        Optional<Member> optionalMember = memberRepository.findById(userId);
 
         // validate
         if (!optionalMember.isPresent()) {
@@ -143,7 +143,7 @@ public class MemberServiceImpl implements MemberService {
             grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 
-        return new User(member.getUserName(), member.getPassword(), grantedAuthorities);
+        return new User(member.getUserId(), member.getPassword(), grantedAuthorities);
     }
 
     /**
