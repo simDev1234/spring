@@ -57,7 +57,16 @@
                 // closest를 통해 상위로 이동, find로 하위 요소 찾기
                 let id = $(this).closest('div').find('input[name=id]').val();
 
-                alert(status + " , " + id);
+                let msg = status == 'COMPLETE' ? '결제 완료 처리 하시겠습니까?' : '수강 취소 처리 하시겠습니까?';
+
+                if (!confirm(msg)) {
+                    return false;
+                }
+
+                let $procForm = $('#procForm');
+                $procForm.find('input[name=id]').val(id);
+                $procForm.find('input[name=status]').val(status);
+                $procForm.submit();
 
             });
 
@@ -79,14 +88,14 @@
                 <th>강좌명</th>
                 <th colspan = "3">신청인</th>
                 <th>상태</th>
-                <th>상태</th>
+                <th>비고</th>
             </tr>
             </thead>
             <tbody id = "dataList">
             <tr th:each="x : ${list}">
                 <td th:text="${x.seq}">1</td>
                 <td>
-                    <p th:text="${x.registeredAt}">2021.08.20</p>
+                    <p th:text="${x.registeredAtText}">2021.08.20</p>
                 </td>
                 <td>
                     <p th:text = "${x.subject}">강좌명</p>
@@ -119,7 +128,7 @@
     </div>
 </body>
 
-<form name ="procForm" method = "post" action = "/admin/takecourse/status.do">
+<form id = "procForm" name ="procForm" method = "post" action = "/admin/takecourse/status.do">
     <input type = "hidden" name ="id">
     <input type = "hidden" name ="status">
 </form>

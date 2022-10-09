@@ -1,8 +1,10 @@
 package com.example.fastlms.course.dto;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -28,5 +30,13 @@ public class TakeCourseDto {
     String userName;
     String phone;
     String subject;
+
+    public String getRegisteredAtText(){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
+
+        return registeredAt != null? registeredAt.format(formatter) : "";
+
+    }
 
 }
