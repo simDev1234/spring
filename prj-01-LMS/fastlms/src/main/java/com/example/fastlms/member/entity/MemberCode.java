@@ -10,5 +10,8 @@ public interface MemberCode {
     
     // 정지 상태
     String MEMBER_STATUS_STOP = "STOP";
+
+    // 현재 탈퇴된 회원
+    String MEMBER_STATUS_WITHDRAW = "WITHDRAW";
     
 }

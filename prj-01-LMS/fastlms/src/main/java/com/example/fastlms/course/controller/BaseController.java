@@ -1,6 +1,6 @@
 package com.example.fastlms.course.controller;
 
-import com.example.fastlms.admin.util.PageUtil;
+import com.example.fastlms.util.PageUtil;
 
 public class BaseController {
 

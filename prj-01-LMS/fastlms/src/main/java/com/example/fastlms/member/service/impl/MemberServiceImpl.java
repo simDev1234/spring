@@ -13,6 +13,7 @@ import com.example.fastlms.member.model.MemberFindPassword;
 import com.example.fastlms.member.model.MemberInput;
 import com.example.fastlms.member.repository.MemberRepository;
 import com.example.fastlms.member.service.MemberService;
+import com.example.fastlms.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -133,6 +134,10 @@ public class MemberServiceImpl implements MemberService {
 
         if (MemberCode.MEMBER_STATUS_STOP.equals(member.getUserStatus())) {
             throw new MemberStopUserException("정지된 회원입니다.");
+        }
+
+        if (MemberCode.MEMBER_STATUS_WITHDRAW.equals(member.getUserStatus())) {
+            throw new MemberStopUserException("탈퇴된 회원입니다.");
         }
 
         // 사용자 권한, Role 추가
@@ -329,11 +334,11 @@ public class MemberServiceImpl implements MemberService {
 
         Member member = optionalMember.get();
 
-        if (!BCrypt.checkpw(parameter.getPassword(), member.getPassword())) {
+        if (PasswordUtil.equals(parameter.getPassword(), member.getPassword())) {
             return new ServiceResult(false, "비밀번호가 일치하지 않습니다.");
         }
 
-        String encPassword = BCrypt.hashpw(parameter.getNewPassword(), BCrypt.gensalt());
+        String encPassword = PasswordUtil.encPassword(parameter.getNewPassword());
         member.setPassword(encPassword);
         memberRepository.save(member);
 
@@ -360,7 +365,40 @@ public class MemberServiceImpl implements MemberService {
         return new ServiceResult();
     }
 
+    /* 회원 정보 삭제 */
+    @Override
+    public ServiceResult withdraw(String id, String password) {
 
+        Optional<Member> optionalMember = memberRepository.findById(id);
+
+        if (!optionalMember.isPresent()){
+            return new ServiceResult(false, "회원 정보가 잘못되었거나 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        if (!PasswordUtil.equals(password, member.getPassword())){
+            return new ServiceResult(false, "회원 정보가 일치하지 않습니다.");
+        }
+
+        member.setUserName("삭제회원");
+        member.setPhoneNumber("");
+        member.setPassword("");
+        member.setRegisteredAt(null);
+        member.setUpdatedAt(null);
+        member.setEmailAuthYn(false);
+        member.setEmailAuthAt(null);
+        member.setEmailAuthKey("");
+        member.setResetPasswordKey(null);
+        member.setResetPasswordLimitDate(null);
+        member.setUserStatus(MemberCode.MEMBER_STATUS_WITHDRAW);
+        member.setZipcode("");
+        member.setAddr("");
+        member.setAddrDetail("");
+        memberRepository.save(member);
+
+        return new ServiceResult();
+    }
 
 
 }

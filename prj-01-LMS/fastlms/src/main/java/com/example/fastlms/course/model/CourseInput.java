@@ -20,4 +20,8 @@ public class CourseInput {
     // 삭제를 위한
     String idList;
 
+    // 파일 업로드
+    String saveFilename;
+    String urlFilename;
+
 }

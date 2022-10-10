@@ -9,6 +9,7 @@ import com.example.fastlms.member.model.MemberInput;
 import com.example.fastlms.member.model.MemberFindPassword;
 import com.example.fastlms.member.model.MemberResetPassword;
 import com.example.fastlms.member.service.MemberService;
+import com.example.fastlms.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -193,5 +194,30 @@ public class MemberController {
         return "member/takecourse";
     }
 
+    /* 회원 탈퇴 page mapping */
+    @GetMapping("/member/withdraw")
+    public String memberWithdraw(){
+
+        return "member/withdraw";
+    }
+
+    /* 회원 탈퇴 */
+    @PostMapping("/member/withdraw")
+    public String memberWithdraw(Principal principal,
+                                 MemberInput.Request parameter,
+                                 Model model){
+
+        String userId = principal.getName();
+
+        ServiceResult result = memberService.withdraw(userId, parameter.getPassword());
+
+        if (!result.isResult()){
+            model.addAttribute("message", result.getMessage());
+            return "common/error";
+        }
+
+
+        return "redirect:/member/logout";
+    }
 
 }

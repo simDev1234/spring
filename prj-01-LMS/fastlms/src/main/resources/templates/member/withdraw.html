@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 탈퇴</title>
+    <style>
+
+        /* title */
+        .title{
+            width : 100%;
+            height : 100px;
+            padding : 10px;
+            box-sizing: border-box;
+            text-align : center;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            border : 1px solid grey;
+        }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+    <script>
+
+        $(document).ready(function(){
+            $('#updateForm').on('submit', function(){
+
+                if (!confirm("회원 정보를 수정하시겠습니까?")) {
+                    return false;
+                }
+
+            });
+        });
+    </script>
+</head>
+<body>
+   <h1 class = "title">회원 탈퇴</h1>
+   <div>
+       <hr/>
+       <a href = "/member/info">회원 정보 수정</a>
+       |
+       <a href = "/member/password">비밀번호 변경</a>
+       |
+       <a href="/member/takecourse">내 수강 정보</a>
+       <hr>
+   </div>
+  <!-- <div th:replace="/fragments/layout.html::fragment-body-menu"></div>-->
+   <!--
+    회원 탈퇴
+    (1) 회원 테이블 정보를 삭제가 아니라 Reset
+    (2) 탈퇴 상세
+   -->
+   <div>
+       <p>
+           회원 탈퇴 시, 서비스를 더 이상 이용할 수 없습니다.
+           <br>
+           회원 탈퇴를 진행하시겠습니까?
+       </p>
+       <div>
+           <form method = "post">
+               <div>
+                   <input type = "password" name = "password" placeholder = "비밀번호 입력" required>
+               </div>
+               <div>
+                   <button type = "submit">회원 탈퇴하기</button>
+               </div>
+           </form>
+       </div>
+   </div>
+
+</body>
+</html>

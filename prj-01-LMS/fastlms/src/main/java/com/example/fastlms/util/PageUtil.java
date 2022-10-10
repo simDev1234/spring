@@ -1,4 +1,4 @@
-package com.example.fastlms.admin.util;
+package com.example.fastlms.util;
 
 public class PageUtil {
 

@@ -51,6 +51,11 @@
 
         $(document).ready(function(){
 
+            $('#searchCourseId').on('change',function(){
+                let courseId = $(this).val();
+                location.href = "?searchCourseId="+courseId;
+            });
+
             $('.row-buttons button').on('click', function(){
 
                 let status = $(this).val();
@@ -77,6 +82,13 @@
     <h1>수강 관리</h1>
     <!--<div th:replace="/fragments/layout.html::fragment-admin-body-menu"></div>-->
     <div class = "list">
+        <div class = "buttons">
+            <select id = "searchCourseId">
+                <option value="">전체 강좌</option>
+                <option th:each="x : ${courseList}" th:value="${x.id}"
+                        th:text="${x.subject}" th:selected="${#strings.equals(param.searchCourseId, x.id)}">전체 강좌</option>
+            </select>
+        </div>
         <div>
             <p class = "total-count">전체 <span th:text="${totalCount}"></span>개</p>
         </div>
@@ -122,9 +134,14 @@
                     </div>
                 </td>
             </tr>
+            <tr th:if = "${#lists.size(list) < 1}">
+                <td colspan="8" style = "height:100px">
+                    강좌 내용이 없습니다.
+                </td>
+            </tr>
             </tbody>
         </table>
-        <div class = "pager" th:utext="${pager}"></div>
+        <div class = "pager" th:if = "${#lists.size(list) > 0}" th:utext="${pager}"></div>
     </div>
 </body>
 

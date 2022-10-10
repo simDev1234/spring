@@ -2,7 +2,6 @@ package com.example.fastlms.admin.controller;
 
 import com.example.fastlms.admin.dto.MemberDto;
 import com.example.fastlms.admin.model.MemberParam;
-import com.example.fastlms.admin.util.PageUtil;
 import com.example.fastlms.course.controller.BaseController;
 import com.example.fastlms.member.model.MemberStatusInput;
 import com.example.fastlms.member.service.MemberService;

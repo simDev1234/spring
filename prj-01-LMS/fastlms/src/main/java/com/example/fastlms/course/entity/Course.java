@@ -36,6 +36,9 @@ public class Course {
     private long salePrice;
     private LocalDate saleEndAt;
 
+    private String saveFilename;
+    private String urlFilename;
+
     @CreatedDate
     private LocalDateTime registeredAt;
     @LastModifiedDate

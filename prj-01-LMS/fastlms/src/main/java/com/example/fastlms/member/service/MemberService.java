@@ -66,4 +66,8 @@ public interface MemberService extends UserDetailsService {
      */
     ServiceResult updateMember(MemberInput.Request parameter);
 
+    /**
+     * 회원 탈퇴
+     */
+    ServiceResult withdraw(String id, String password);
 }
