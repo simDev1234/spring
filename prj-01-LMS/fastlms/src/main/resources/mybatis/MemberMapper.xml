@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace : MemberMapper의 패키지 경로.클래스명-->
+<mapper namespace="com.example.fastlms.admin.mapper.MemberMapper">
+    <!--쿼리가 이루어지는 공간-->
+
+    <sql id = "selectListWhere">
+        <if test="searchType != null and searchValue != null">
+            <choose>
+                <when test="searchType == 'userId'">
+                    AND user_id like concat('%', #{searchValue},'%')
+                </when>
+                <when test="searchType == 'userName'">
+                    AND user_name like concat('%', #{searchValue},'%')
+                </when>
+                <when test="searchType == 'phoneNumber'">
+                    AND phone_number like concat('%', #{searchValue},'%')
+                </when>
+                <otherwise>
+                    AND
+                    (
+                    user_id like concat('%', #{searchValue},'%')
+                    or
+                    user_name like concat('%', #{searchValue},'%')
+                    or
+                    phone_number like concat('%', #{searchValue},'%')
+                    )
+                </otherwise>
+            </choose>
+        </if>
+    </sql>
+
+    <select id="selectListCount" resultType="long">
+
+        select
+        count(*)
+        from member
+        where 1 = 1
+
+        <include refid="selectListWhere"></include>
+    </select>
+
+    <select id="selectList" resultType="com.example.fastlms.admin.dto.MemberDto">
+
+        select
+        *
+        from member
+        where 1 = 1
+
+        <include refid="selectListWhere"></include>
+
+        limit #{pageStart}, #{pageEnd}
+    </select>
+</mapper>
