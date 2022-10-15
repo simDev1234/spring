@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.fastlms.banner.mapper.BannerMapper">
+    <!--쿼리가 이루어지는 공간-->
+
+    <select id="selectListCount" resultType="long">
+
+        select
+        count(*)
+        from banner
+
+    </select>
+
+    <select id="selectList" resultType="com.example.fastlms.admin.dto.BannerDto">
+
+        select
+        *
+        from banner
+        limit #{pageStart}, #{pageEnd}
+
+    </select>
+
+    <select id="selectListInUse" resultType="com.example.fastlms.admin.dto.BannerDto">
+        select
+        *
+        from banner
+        where open_yn is true
+        order by banner_order
+    </select>
+</mapper>

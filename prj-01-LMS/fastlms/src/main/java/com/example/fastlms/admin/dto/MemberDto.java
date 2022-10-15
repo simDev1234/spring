@@ -1,12 +1,16 @@
 package com.example.fastlms.admin.dto;
 
+import com.example.fastlms.member.entity.LoginHistory;
 import com.example.fastlms.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,6 +45,10 @@ public class MemberDto {
     long totalCount;
     long seq;
 
+    // 관리자단 사용자 정보 추가
+    LocalDateTime lastLoginDate;
+    List<LoginHistory> loginHistories;
+
     public static MemberDto of(Member member) {
         return MemberDto.builder()
                 .userId(member.getUserId())
@@ -59,6 +67,7 @@ public class MemberDto {
                 .zipcode(member.getZipcode())
                 .addr(member.getAddr())
                 .addrDetail(member.getAddrDetail())
+                .lastLoginDate(member.getLastLoginDate())
                 .build();
     }
 

@@ -5,13 +5,44 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>홈</title>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <style>
+
+        body {
+            width : 1200px;
+            margin : auto;
+        }
+
+        .single-item {
+            margin-top :20px;
+        }
+
+        .banner-img {
+            background-position: center;
+            background-size:cover;
+        }
+    </style>
 </head>
 <body>
     <h1>인덱스 페이지</h1>
     <div th:replace="/fragments/layout.html::fragment-body-menu"></div>
-    <div>
-        <img src = "/files/2022/10/10/2063bae3e3954914b3448c644cf1a5cd.jpg">
+    <div class="single-item" >
+        <div th:each="x : ${list}" class = "banner-img">
+            <a th:href="${x.link}" th:target="${#strings.equals(x.bannerType, 'NEW')? '_blank' : '_self'}">
+                <img th:src = "${x.urlFilePath}">
+            </a>
+        </div>
     </div>
+    <script>
+        $(document).ready(function(){
+            $('.single-item').slick({
+                //
+            });
+        });
+    </script>
 </body>
 </html>

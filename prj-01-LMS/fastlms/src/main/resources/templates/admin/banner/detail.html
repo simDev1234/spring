@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>배너 관리 - 배너 등록</title>
+    <style>
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border : 1px solid black;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>배너 관리 - 배너 등록</h1>
+<!--    <div th:replace="/fragments/layout.html::fragment-admin-body-menu"></div>-->
+    <div class = "detail">
+        <form method = "post" enctype="multipart/form-data" action = "/admin/banner/register.do">
+            <table>
+                <tbody>
+                <tr>
+                    <th>배너명</th>
+                    <td><input type = "text" name = "title" placeholder="배너명 입력"></td>
+                </tr>
+                <tr>
+                    <th>배너 파일</th>
+                    <td><input type = "file" name = "file"></td>
+                </tr>
+                <tr>
+                    <th>링크 주소</th>
+                    <td><input type = "text" name = "link" placeholder="링크 주소 입력"></td>
+                </tr>
+                <tr>
+                    <th>오픈 방법</th>
+                    <td>
+                        <select name = "type">
+                            <option value = "thisWindow">현재창에서</option>
+                            <option value = "diffWindow">새 창에서</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>정렬 순서</th>
+                    <td>
+                        <input type = "text" name = "bannerOrder">
+                    </td>
+                </tr>
+                <tr>
+                    <th>공개 여부</th>
+                    <td><input type = "checkbox"><label>공개</label></td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <button type = "submit">배너 등록하기</button>
+                <button type = "button" onclick="location.href='/admin/banner/list.do'">목록으로</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

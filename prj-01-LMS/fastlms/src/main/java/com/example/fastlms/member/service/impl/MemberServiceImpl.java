@@ -5,12 +5,14 @@ import com.example.fastlms.admin.mapper.MemberMapper;
 import com.example.fastlms.admin.model.MemberParam;
 import com.example.fastlms.components.MailComponents;
 import com.example.fastlms.course.model.ServiceResult;
+import com.example.fastlms.member.entity.LoginHistory;
 import com.example.fastlms.member.entity.Member;
 import com.example.fastlms.member.entity.MemberCode;
 import com.example.fastlms.member.exception.MemberNotEmailAuthException;
 import com.example.fastlms.member.exception.MemberStopUserException;
 import com.example.fastlms.member.model.MemberFindPassword;
 import com.example.fastlms.member.model.MemberInput;
+import com.example.fastlms.member.repository.LoginHistoryRepository;
 import com.example.fastlms.member.repository.MemberRepository;
 import com.example.fastlms.member.service.MemberService;
 import com.example.fastlms.util.PasswordUtil;
@@ -38,6 +40,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MailComponents mailComponents;
     private final MemberMapper memberMapper;
+    private final LoginHistoryRepository loginHistoryRepository;
 
     /**
      * 가입하기
@@ -276,13 +279,19 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberDto detail(String userId) {
 
-        Optional<Member> optionalMember = memberRepository.findById(userId);
+        List<LoginHistory> histories =
+                loginHistoryRepository.findByUserIdOrderByLastLoginDateDesc(userId);
 
-        if (!optionalMember.isPresent()) {
-            return null;
+        MemberDto memberDto = MemberDto.of(
+                memberRepository.findById(userId)
+                        .orElseThrow(() -> new UsernameNotFoundException("사용자 정보 없음"))
+        );
+
+        if (!CollectionUtils.isEmpty(histories)) {
+            memberDto.setLoginHistories(histories);
         }
 
-        return MemberDto.of(optionalMember.get());
+        return memberDto;
     }
 
     /* 회원 상태 변경 */

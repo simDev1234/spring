@@ -19,7 +19,7 @@
         .list table th, .list table td {
             border: 1px solid black;
         }
-        .search-form {
+        .save-or-delete {
             position: relative;
             padding : 5px 0 10px 0;
             text-align: right;
@@ -67,6 +67,7 @@
                     <th>이메일 인증 여부</th>
                     <th>가입일</th>
                     <th>관리자여부</th>
+                    <th>마지막 로그인 일자</th>
                 </tr>
             </thead>
             <tbody>
@@ -86,6 +87,7 @@
                         <p th:if="${x.adminYn eq true}">Y</p>
                         <p th:if="${x.adminYn eq false}">N</p>
                     </td>
+                    <td th:text="${x.lastLoginDate}"></td>
                 </tr>
             </tbody>
         </table>

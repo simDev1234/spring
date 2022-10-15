@@ -8,7 +8,7 @@
     <title>회원 상세 정보</title>
     <style>
 
-        .detail table {
+        table {
             border-collapse: collapse;
         }
 
@@ -84,6 +84,26 @@
         <div>
             <a href = "list.do">목록으로</a>
         </div>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>NO</th>
+                    <th>로그인 일자</th>
+                    <th>접속 IP</th>
+                    <th>접속 UserAgent</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="x, i : ${member.loginHistories}">
+                    <td th:text="${i.count}"></td>
+                    <td th:text="${x.lastLoginDate}"></td>
+                    <td th:text="${x.userIp}"></td>
+                    <td th:text="${x.userAgent}"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

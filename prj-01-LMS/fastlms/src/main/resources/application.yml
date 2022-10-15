@@ -1,4 +1,6 @@
 spring:
+
+
   datasource:
     url: jdbc:mariadb://localhost:43306/minicampus
     driver-class-name: org.mariadb.jdbc.Driver
@@ -27,7 +29,6 @@ spring:
             trust: smtp.gmail.com
           starttls:
             enable: true
-
 logging:
   level:
     root: debug

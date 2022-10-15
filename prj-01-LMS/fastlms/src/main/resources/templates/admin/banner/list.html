@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>배너 관리</title>
+    <style>
+        .list {
+            width : 1200px;
+            margin : auto;
+        }
+        .list table {
+            width : 100%;
+            border-collapse: collapse;
+            text-align:center;
+        }
+        .list table th, .list table td {
+            border: 1px solid black;
+        }
+        .pager{
+            margin-top:20px;
+            text-align:center;
+        }
+
+        .pager a.on{
+            font-weight : bold;
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <h1>배너 관리</h1>
+    <div th:replace="/fragments/layout.html::fragment-admin-body-menu"></div>
+    <div class = "list">
+        <div class = "save-or-delete">
+            <a href = "register.do">배너 등록</a>
+            <a href = "#">배너 삭제</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>NO</th>
+                    <th>배너명</th>
+                    <th>이미지</th>
+                    <th>등록일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="x : ${list}">
+                    <td th:text="${x.bannerOrder}"></td>
+                    <td th:text="${x.title}"></td>
+                    <td>
+                        <img th:src="${x.urlFilePath}">
+                    </td>
+                    <td th:text="${x.registeredAtText}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class ="pager" th:utext="${pager}"></div>
+    </div>
+</body>
+</html>

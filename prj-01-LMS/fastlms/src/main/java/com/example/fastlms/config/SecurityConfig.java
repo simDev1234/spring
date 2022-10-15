@@ -1,5 +1,6 @@
 package com.example.fastlms.config;
 
+import com.example.fastlms.member.service.LoginHistoryService;
 import com.example.fastlms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -57,6 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.formLogin()
                 .loginPage("/member/login")
+                //.successForwardUrl("/member/login-success-handler")
+                //.successHandler(getSuccessHandler())
+                .defaultSuccessUrl("/member/login-success")
                 .failureHandler(getFailureHandler())
                 .permitAll();
 
@@ -87,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
 
         // 아래 허용
-        web.ignoring().antMatchers("/favicon.png", "/files/**");
+        web.ignoring().antMatchers("/files/**", "/files/*");
 
         super.configure(web);
     }

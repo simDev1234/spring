@@ -8,9 +8,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -48,6 +47,10 @@ public class Member implements MemberCode{
     private String addr;
     private String addrDetail;
 
+    // 히스토리9
+    private String userIp;
+    private String userAgent;
+    private LocalDateTime lastLoginDate;
 
     @CreatedDate
     private LocalDateTime registeredAt;
