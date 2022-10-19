@@ -1,2 +1,30 @@
 server:
   port: 8888
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+    path: /h2-console
+  jpa:
+    defer-datasource-initialization: true
+    database-platform: H2
+    hibernate:
+      #오픈할 때는 false로 한다.
+      ddl-auto: create-drop
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+
