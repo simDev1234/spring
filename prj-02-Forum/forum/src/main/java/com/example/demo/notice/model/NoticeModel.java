@@ -1,13 +1,14 @@
 package com.example.demo.notice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class NoticeModel {
 
