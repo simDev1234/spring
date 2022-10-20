@@ -21,6 +21,9 @@ public class Notice {
     @Column(name = "notice_id")
     private Long id;
 
+    @ManyToOne
+    private User user;
+
     @Column(name = "title")
     private String title;
 
@@ -35,6 +38,9 @@ public class Notice {
     @Min(value = 0)
     private long views;
 
+    @Column
+    private boolean deleted;
+
     @Column(name = "registeredAt")
     @CreatedDate
     private LocalDateTime regDate;
@@ -42,5 +48,7 @@ public class Notice {
     @Column(name = "updatedAt")
     @LastModifiedDate
     private LocalDateTime editDate;
+
+    private LocalDateTime deletedDate;
 
 }
